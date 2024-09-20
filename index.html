@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas com Vue.js</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .completed { text-decoration: line-through; color: gray; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Lista de Tarefas</h1>
+        <input v-model="newTask" @keyup.enter="addTask" placeholder="Adicione uma nova tarefa" />
+        <ul>
+            <li v-for="(task, index) in tasks" :key="index">
+                <span :class="{ completed: task.completed }" @click="toggleTask(index)">
+                    {{ task.text }}
+                </span>
+                <button @click="editTask(index)">Editar</button>
+                <button @click="removeTask(index)">Remover</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                newTask: '',
+                tasks: []
+            },
+            methods: {
+                addTask() {
+                    if (this.newTask.trim() === '') return;
+                    this.tasks.push({ text: this.newTask, completed: false });
+                    this.newTask = '';
+                },
+                removeTask(index) {
+                    this.tasks.splice(index, 1);
+                },
+                editTask(index) {
+                    const editedTask = prompt('Edite a tarefa:', this.tasks[index].text);
+                    if (editedTask !== null) {
+                        this.tasks[index].text = editedTask;
+                    }
+                },
+                toggleTask(index) {
+                    this.tasks[index].completed = !this.tasks[index].completed;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
