@@ -20,9 +20,11 @@
                 <span :class="{ completed: task.completed }" @click="toggleTask(index)">
                     {{ task.text }}
                 </span>
-                <button @click="editTask(index)">Editar</button>
-                <button @click="removeTask(index)">Remover</button>
-            </li>
+                <div class="button-container">
+                    <button class="edit" @click="editTask(index)">Editar</button>
+                    <button class="remove" @click="removeTask(index)">Remover</button>
+                </div>
+            </li>            
         </ul>
     </div>
 
